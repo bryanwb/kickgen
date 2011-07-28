@@ -81,3 +81,5 @@ are prefixed with '#' so they won't cause errors in your kickstart.
 
 This script has not been thoroughly tested, particularly with 
 HP HW RAID drives
+
+foobarbaz
