@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/opt/kickgen/collector.py /opt/kickgen/all-rhel.txt 2>&1 > /dev/null
+

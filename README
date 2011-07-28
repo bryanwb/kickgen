@@ -1,0 +1,83 @@
+===Licensing===
+The license of the kickgen.pl script is unclear. It was
+originally written by Jerome Delamarche and hosted at
+http://www.trickytools.com/php/kickgen.php but no license 
+terms are given
+
+All other scripts have been written by and are under the
+copyright of Bryan Berry, they are under the Apache 2.0
+license. 
+
+===Purpose===
+
+The script will output a kickstart file that you can use to
+rebuild your system from scratch. There are additional scripts 
+that you can use to distribute this script to multiple servers
+and to collect them back to a central point periodically.
+
+This script is not thoroughly tested
+
+===Basic Usage===
+
+$ ./kickgen.pl   # outputs the kickstart file to stdout
+
+$ ./kickgen.pl  2> /dev/null > ks.cfg  # output 
+
+$ fab -H localhost install # put the kickgen.pl on a server
+                             and installs cron job to run it nightly
+
+$ fab -H host1,host2,host3  install # install on multiple hosts
+
+$ ./factory.py hosts.txt install  
+# install kickgen.pl on all hostnames listed in hosts.txt 
+# hostnames should be one per line
+
+$ ./collector.py  hosts.txt # collects generated files and stores them
+				in a local cache					
+
+===Dependencies===
+
+kickgen.pl requires you have XML::Simple and XML::Parser
+libraries installed somewhere on your system.
+
+$ yum install perl-XML-Simple
+
+fabfile.py depends on the excellent python library Fabric
+See http://fabfile.org for details
+
+It is a pain to install on RHEL 5
+
+
+This script has a number of components
+
+===Quick Summary===
+
+kickgen.pl runs locally on your rhel host and generates an up-to-date
+kickstart file that can be used for disaster recovery. 
+
+fabric  http://www.fabfile.org a tool for remote job execution 
+written in Python
+
+factory.py takes a list of hosts, a fabric command, and runs 
+each command in a separate subprocess. By default, fabric
+will only run for a total of 240s (4 minutes) before it
+starts killing subprocesses that it presumes are running
+too long 
+
+collectory.py -- this script collects the generated kickstart files
+and copies them over to the repo server at FAO 
+
+
+===How Everything Works===
+
+kickgen.pl runs locally on your rhel host and generates an up-to-date
+kickstart file that can be for disaster recovery. It has one big
+known bug, it cannot handle HP hardware RAID array. As a crappy fix
+I output the stdout of df -h and lvdisplay at the end of the file
+so you can piece together the partition info by hand. These lines 
+are prefixed with '#' so they won't cause errors in your kickstart.  
+
+===Caveat Emptor===
+
+This script has not been thoroughly tested, particularly with 
+HP HW RAID drives

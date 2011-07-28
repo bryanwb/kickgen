@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/root/kickgen.pl 2> /dev/null > /root/$(hostname -s)"-ks.cfg"
+
