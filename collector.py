@@ -77,7 +77,7 @@ def copyKickstart(host, filename):
 def notifyAdmin(outofdateList):
 	outofdateListStr = ','.join(outofdateList)
 	cmd = 'echo ' + outofdateListStr + ' | mail -s ' + \
-		'"hosts out of date kickstart" bryan.berry@fao.org'
+		'"hosts out of date kickstart" you@example.com'
 	os.system(cmd)
 
 def checkHosts(hosts):

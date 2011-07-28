@@ -410,11 +410,6 @@ foreach my $pkg (@C_EXTRA_PKGS) {
 OutputKick($C_POST_SCRIPT);
 OutputKick("#EOF");
 
-# Run custom FAO post-install
-OutputKick('tmpfile=$(/bin/mktemp)');
-OutputKick('/usr/bin/wget http://git.fao.org/\?p=fao_post_install.git\;a=blob_plain\;f=post_install.sh\;hb=HEAD -O $tmpfile');
-OutputKick('/bin/bash $tmpfile 2>&1 > post_install.log');
-
 
 # Copy the configuration files:
 OutputKick("BackupFile() {");
